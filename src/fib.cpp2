@@ -1,0 +1,38 @@
+main: (args) -> int = {
+    n := 0;
+    all := false;
+    if args.argc > 1 {
+        input: std::string = args.argv[1];
+        std::from_chars(input.data(), input.data() + input.ssize(), n);
+        if args.argc > 2 {
+            if args.argv[2] == std::string("--all") {
+                all = true;
+            }
+        }
+    }
+    if n < 0 {
+        n = 0;
+    }
+
+    f := std::vector<int>();
+    i := 0;
+    while i <= n {
+        if i == 0 {
+            f.push_back(0);
+        } else if i == 1 {
+            f.push_back(1);
+        } else {
+            f.push_back(f[i-2] + f[i-1]);
+        }
+        i++;
+    }
+
+    if all {
+        for f do (g)
+            std::cout << g << ',';
+        std::cout << '\n';
+    } else {
+        std::cout << f[n] << '\n';
+    }
+    return f[n];
+}
